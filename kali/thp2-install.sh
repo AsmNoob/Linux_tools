@@ -1,167 +1,102 @@
-#!/bin/bash
-###############################################################################
-# thp2-install.sh
-#
-# The Hackers Playbook 2 Installer Script
-#
-###############################################################################
-#
-# USAGE:
-#
-###############################################################################
-#
-# KNOWN ISSUES:
-#
-# This script is under active development and doesn't work yet.
-#
-###############################################################################
+service postgresql start
+update-rc.d postgresql enable
 
-# "Global" variables
-LOGFILE=""
-DEBUG="false"
-OS=$(uname -s)
-LTYPE=""
+msfdb init
 
-###############################################################################
-#                           F U N C T I O N S 
-###############################################################################
-
-###
-debug()
-{
-    message=$1
-    if [ $DEBUG == "true" ]; then
-        echo "DEBUG: $message"
-    fi
-    return
-}
-
-###
-usage()
-{
-    echo "Usage:"
-    echo ""
-    echo "  -d            - enable debug"
-    echo "  -h            - get help (this screen)"
-    echo "  -l <logfile>  - log to file <logfile>"
-    echo ""
-    return
-}
-
-
-### Detect the Linux dist we're on
-detectLinux()
-{
-    # Only do this is we're on a Linux machine
-    if [ $OS == "Linux" ]; then
-
-        # RedHat derivatives
-        if [ -f /etc/redhat-release ]; then
-            debug "Detected RedHat derivative"
-            LTYPE="RedHat"
-        else
-            debug "NOT running on a RedHat type"
-        fi
-
-        # Debian derivative
-        if [ -f /etc/lsb-release ]; then
-            DISTID=$(grep DISTRIB_ID /etc/lsb-release | awk -F= '{print $2}')
-            debug "Detected DISTID $DISTID"
-            if [ $DISTID == "Kali" ]; then
-                debug "Kali detected"
-            # test these when I get a machine spun up
-            #elif [ $DISTID == "Debian"]; then
-            #    debug "Pure Debian detected"
-            #elif [ $DISTID == "Ubuntu"]; then
-            #    debug "Ubuntu detected"
-            else
-                echo "Unknown Debian dist $DISTID"
-            fi
-        else
-            debug "NOT running on a Debian type"
-        fi
-    else
-        echo "ERROR: trying to detect Linux type on a non Linux machine"
-        return 1
-    fi
-
-}
-
-
-###############################################################################
-#                  O S   D E T E C T I O N   &   S E T U P 
-###############################################################################
-case $OS in
-    "Linux")
-        debug "Running on Linux"
-
-        detectLinux
-        ;;
-    "Darwin")
-        debug "Running on OS/X"
-        ;;
-    *)
-        echo "Unsupported OS ($OS), exiting"
-        exit 0
-esac
-
-
-###############################################################################
-#              C O M M A N D   L I N E   A R G U M E N T S 
-###############################################################################
-while getopts dhl: option
-do
- case "$option" in
-    d)  DEBUG="true"
-        debug "Debugging enabled"
-        ;;
-    h)  usage
-        exit 1
-        ;;
-    l)  LOGFILE=$OPTARG
-        debug "Logfile set to $LOGFILE"
-        ;;
-    *)
-        echo "Invalid argument"
-        echo ""
-        usage
-        exit
-        ;;
-     esac
-done
-
-
-
-### See if the necessary commands are present
-
-exit
-
-
-git clone https://bitbucket.org/LaNMaSteR53/recon-ng.git /opt/recon-ng 
-
+apt-get update
+apt-get install -y python-pefile bdfproxy mitmproxy python-openssl openssl subversion python2.7-dev python git gcc make libpcap-dev python-elixir ldap-utils rwho rsh-client x11-apps finger
+git clone https://github.com/secretsquirrel/the-backdoor-factory /opt/the-backdoor-factory
+cd /opt/the-backdoor-factory
+./install.sh
+pip install selenium
+git clone https://github.com/breenmachine/httpscreenshot.git /opt/httpscreenshot
+cd /opt/httpscreenshot
+chmod +x install-dependencies.sh && ./install-dependencies.sh
+git clone https://github.com/pentestgeek/smbexec.git /opt/smbexec
+echo "******************Select 1 - Debian/Ubuntu and derviatives; Select all defaults, then select 4, followed by 5******************"
+cd /opt/smbexec && ./install.sh
+./install.sh
+git clone https://github.com/robertdavidgraham/masscan.git /opt/masscan
+cd /opt/masscan
+make
+make install
+git clone https://github.com/Dionach/CMSmap /opt/CMSmap
+git clone https://github.com/wpscanteam/wpscan.git /opt/wpscan
+cd /opt/wpscan && ./wpscan.rb --update
+git clone https://github.com/ChrisTruncer/EyeWitness.git /opt/EyeWitness
+git clone https://github.com/MooseDojo/praedasploit /opt/praedasploit
+git clone https://github.com/sqlmapproject/sqlmap /opt/sqlmap
+git clone https://bitbucket.org/LaNMaSteR53/recon-ng.git /opt/recon-ng
 git clone https://github.com/leebaird/discover.git /opt/discover
-
-cd /opt/discover
-./update.sh 
-
-
-
-###############################################################################
-# B e E F
-###############################################################################
-
-###
-# Install RVM for beef (https://rvm.io/)
-# not mentioned in the book and is necessary for some of the packages to be installed correctly
-curl -sSL https://get.rvm.io | bash -s stable
-export PATH=$PATH:/usr/local/rvm/bin
-
-###
-#cd /opt/
-#wget https://raw.github.com/beefproject/beef/a6a7536e/install-beef
-#chmod +x install-beef
-#./install-beef
+cd /opt/discover && ./setup.sh
+git clone https://github.com/SpiderLabs/Responder.git /opt/Responder
+git clone https://github.com/cheetz/Easy-P.git /opt/Easy-P
+git clone https://github.com/cheetz/Password_Plus_One /opt/Password_Plus_One
+git clone https://github.com/cheetz/PowerShell_Popup /opt/PowerShell_Popup
+git clone https://github.com/cheetz/icmpshock /opt/icmpshock
+git clone https://github.com/cheetz/brutescrape /opt/brutescrape
+git clone https://www.github.com/cheetz/reddit_xss /opt/reddit_xss
+git clone https://github.com/cheetz/PowerSploit /opt/HP_PowerSploit
+git clone https://github.com/cheetz/PowerTools /opt/HP_PowerTools
+wget http://ptscripts.googlecode.com/svn/trunk/dshashes.py /opt/NTDSXtract/dshashes.py
+git clone https://github.com/secforce/sparta.git /opt/sparta
+git clone https://github.com/tcstool/NoSQLMap.git /opt/NoSQLMap
+mkdir /opt/spiderfoot/ && cd /opt/spiderfoot
+wget http://sourceforge.net/projects/spiderfoot/files/spiderfoot-2.3.0-src.tar.gz/download
+tar xzvf download
+pip install lxml
+pip install netaddr
+pip install M2Crypto
+pip install cherrypy
+pip install mako
+mkdir /opt/wce && cd /opt/wce
+wget http://www.ampliasecurity.com/research/wce_v1_41beta_universal.zip
+unzip wce_v1* -d /opt/wce && rm wce_v1*.zip
+cd /opt/ && wget http://blog.gentilkiwi.com/downloads/mimikatz_trunk.zip
+unzip -d ./mimikatz mimikatz_trunk.zip
+rm -f mimikatz_trunk.zip
+git clone https://github.com/trustedsec/social-engineer-toolkit/ /opt/set/
+cd /opt/set && ./setup.py install
+git clone https://github.com/mattifestation/PowerSploit.git /opt/PowerSploit
+cd /opt/PowerSploit && wget https://raw.githubusercontent.com/obscuresec/random/master/StartListener.py && wget https://raw.githubusercontent.com/darkoperator/powershell_scripts/master/ps_encoder
+git clone https://github.com/samratashok/nishang /opt/nishang
+git clone https://github.com/Veil-Framework/Veil /opt/Veil
+cd /opt/Veil/ && ./Install.sh -c
+git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
+git clone https://github.com/DanMcInerney/net-creds.git /opt/net-creds
+git clone https://github.com/derv82/wifite /opt/wifite
+git clone https://github.com/sophron/wifiphisher.git /opt/wifiphisher
+git clone https://github.com/pentestgeek/phishing-frenzy.git /var/www/phishing-frenzy
+git clone https://github.com/macubergeek/gitlist.git /opt/gitlist
+git clone https://github.com/trustedsec/unicorn /opt/unicorn
+git clone https://github.com/michenriksen/gitrob.git /opt/gitrob
+gem install bundler
+service postgresql start
+cd /opt/gitrob/bin
+gem install gitrob
 cd /opt
-wget https://raw.githubusercontent.com/beefproject/beef/master/install-beef
-cat install-beef | sed -e 's/libreadline6//' > install-beef.new
-chmod +x install-beef.new
+wget ftp://ftp.freeradius.org/pub/freeradius/old/freeradius-server-2.1.12.tar.bz2
+tar xfj freeradius-server-2.1.12.tar.bz2 && rm -f freeradius-server-2.1.12.tar.bz2 && mv freeradius-server-2.1.12 freeradius-server && cd freeradius-server
+wget https://raw.githubusercontent.com/brad-anton/freeradius-wpe/master/freeradius-wpe.patch
+patch -p1 < freeradius-wpe.patch
+./configure && make && make install
+cd /opt && mkdir peCloak && cd peCloak
+wget http://www.securitysift.com/download/peCloak.py
+wget https://gist.githubusercontent.com/anonymous/420ab3bf69e4d5e1f833/raw/d598b65da5188676c7e43663d98ffb6ada95d2a8/SectionDoubleP.py
+cd /tmp
+echo "******************Press enter to save the file then q to exit******************"
+w3m Download http://sourceforge.net/projects/winappdbg/files/latest/download
+unzip winappdbg-1.5.zip
+cd winappdbg-1.5
+python setup.py install
+svn checkout http://libdasm.googlecode.com/svn/trunk/ /tmp/libdasm
+cd /tmp/libdasm
+make
+make install
+cd pydasm
+python setup.py build_ext
+sudo python setup.py install
+su - postgres
+createuser -s gitrob
+createdb -O gitrob gitrob
+exit
