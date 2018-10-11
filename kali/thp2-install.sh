@@ -12,23 +12,20 @@ pip install selenium
 git clone https://github.com/breenmachine/httpscreenshot.git /opt/httpscreenshot
 cd /opt/httpscreenshot
 chmod +x install-dependencies.sh && ./install-dependencies.sh
-git clone https://github.com/pentestgeek/smbexec.git /opt/smbexec
-echo "******************Select 1 - Debian/Ubuntu and derviatives; Select all defaults, then select 4, followed by 5******************"
-cd /opt/smbexec && ./install.sh
-./install.sh
+
 git clone https://github.com/robertdavidgraham/masscan.git /opt/masscan
 cd /opt/masscan
 make
 make install
 git clone https://github.com/Dionach/CMSmap /opt/CMSmap
 git clone https://github.com/wpscanteam/wpscan.git /opt/wpscan
-cd /opt/wpscan && ./wpscan.rb --update
+cd /opt/wpscan && wpscan --update
 git clone https://github.com/ChrisTruncer/EyeWitness.git /opt/EyeWitness
 git clone https://github.com/MooseDojo/praedasploit /opt/praedasploit
 git clone https://github.com/sqlmapproject/sqlmap /opt/sqlmap
 git clone https://bitbucket.org/LaNMaSteR53/recon-ng.git /opt/recon-ng
 git clone https://github.com/leebaird/discover.git /opt/discover
-cd /opt/discover && ./setup.sh
+cd /opt/discover && ./update.sh
 git clone https://github.com/SpiderLabs/Responder.git /opt/Responder
 git clone https://github.com/cheetz/Easy-P.git /opt/Easy-P
 git clone https://github.com/cheetz/Password_Plus_One /opt/Password_Plus_One
@@ -38,30 +35,29 @@ git clone https://github.com/cheetz/brutescrape /opt/brutescrape
 git clone https://www.github.com/cheetz/reddit_xss /opt/reddit_xss
 git clone https://github.com/cheetz/PowerSploit /opt/HP_PowerSploit
 git clone https://github.com/cheetz/PowerTools /opt/HP_PowerTools
-wget http://ptscripts.googlecode.com/svn/trunk/dshashes.py /opt/NTDSXtract/dshashes.py
+
 git clone https://github.com/secforce/sparta.git /opt/sparta
 git clone https://github.com/tcstool/NoSQLMap.git /opt/NoSQLMap
 mkdir /opt/spiderfoot/ && cd /opt/spiderfoot
 wget http://sourceforge.net/projects/spiderfoot/files/spiderfoot-2.3.0-src.tar.gz/download
 tar xzvf download
-pip install lxml
-pip install netaddr
-pip install M2Crypto
-pip install cherrypy
-pip install mako
+python -m pip install lxml
+python -m pip install netaddr
+python -m pip install M2Crypto
+python -m pip install cherrypy
+python -m pip install mako
 mkdir /opt/wce && cd /opt/wce
-wget http://www.ampliasecurity.com/research/wce_v1_41beta_universal.zip
+wget https://www.ampliasecurity.com/research/wce_v1_41beta_universal.zip
 unzip wce_v1* -d /opt/wce && rm wce_v1*.zip
 cd /opt/ && wget http://blog.gentilkiwi.com/downloads/mimikatz_trunk.zip
 unzip -d ./mimikatz mimikatz_trunk.zip
 rm -f mimikatz_trunk.zip
 git clone https://github.com/trustedsec/social-engineer-toolkit/ /opt/set/
 cd /opt/set && ./setup.py install
-git clone https://github.com/mattifestation/PowerSploit.git /opt/PowerSploit
-cd /opt/PowerSploit && wget https://raw.githubusercontent.com/obscuresec/random/master/StartListener.py && wget https://raw.githubusercontent.com/darkoperator/powershell_scripts/master/ps_encoder
+
+cd /opt/PowerSploit && wget https://raw.githubusercontent.com/obscuresec/random/master/StartListener.py && git clone https://github.com/darkoperator/powershell_scripts.git
 git clone https://github.com/samratashok/nishang /opt/nishang
-git clone https://github.com/Veil-Framework/Veil /opt/Veil
-cd /opt/Veil/ && ./Install.sh -c
+
 git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
 git clone https://github.com/DanMcInerney/net-creds.git /opt/net-creds
 git clone https://github.com/derv82/wifite /opt/wifite
