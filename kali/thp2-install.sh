@@ -81,17 +81,24 @@ wget http://www.securitysift.com/download/peCloak.py
 wget https://gist.githubusercontent.com/anonymous/420ab3bf69e4d5e1f833/raw/d598b65da5188676c7e43663d98ffb6ada95d2a8/SectionDoubleP.py
 cd /tmp
 echo "******************Press enter to save the file then q to exit******************"
-w3m Download http://sourceforge.net/projects/winappdbg/files/latest/download
+apt-get install w3m -y
+cd /opt/
+wget http://winappdbg.sourceforge.net/dist/winappdbg-1.5.zip /opt/
+
 unzip winappdbg-1.5.zip
 cd winappdbg-1.5
 python setup.py install
-svn checkout http://libdasm.googlecode.com/svn/trunk/ /tmp/libdasm
-cd /tmp/libdasm
+cd /opt/ 
+wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/libdasm/libdasm-1.5.tar.gz
+rm libdasm-1.5.tar.gz
+cd libdasm-1.5
 make
 make install
+
 cd pydasm
 python setup.py build_ext
 sudo python setup.py install
+
 su - postgres
 createuser -s gitrob
 createdb -O gitrob gitrob
