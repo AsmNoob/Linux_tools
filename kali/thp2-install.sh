@@ -89,17 +89,23 @@ unzip winappdbg-1.5.zip
 cd winappdbg-1.5
 python setup.py install
 cd /opt/ 
+rm winappdbg-1.5.zip
+
 wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/libdasm/libdasm-1.5.tar.gz
-rm libdasm-1.5.tar.gz
+tar -zxvf libdasm-1.5.tar.gz
 cd libdasm-1.5
 make
 make install
-
 cd pydasm
 python setup.py build_ext
 sudo python setup.py install
+cd /opt/
+rm libdasm-1.5.tar.gz
 
 su - postgres
 createuser -s gitrob
 createdb -O gitrob gitrob
 exit
+
+cd /opt/
+rm thp2-install.sh
