@@ -43,7 +43,7 @@ echo "============================="
 
 ps aux 2>/dev/null > services.txt
 ps -ef 2>/dev/null > services.txt
-top 2>/dev/null > services.txt
+# top 2>/dev/null > services.txt
 cat /etc/services 2>/dev/null > services.txt
 
 echo "============================="
@@ -119,14 +119,14 @@ echo "============================="
 echo "          Communications"
 echo "============================="
 
-lsof -i 2>/dev/null > communications.txt
-lsof -i :80 2>/dev/null > communications.txt
+#lsof -i 2>/dev/null > communications.txt
+#lsof -i :80 2>/dev/null > communications.txt
 grep 80 /etc/services 2>/dev/null > communications.txt
 netstat -antup 2>/dev/null > communications.txt
 netstat -antpx 2>/dev/null > communications.txt
 netstat -tulpn 2>/dev/null > communications.txt
 chkconfig --list 2>/dev/null > communications.txt
-chkconfig --list | grep 3:on 2>/dev/null > communications.txt
+#chkconfig --list | grep 3:on 2>/dev/null > communications.txt
 last 2>/dev/null > communications.txt
 w 2>/dev/null > communications.txt
 
@@ -134,9 +134,9 @@ echo "============================="
 echo "          Cached IP MAC"
 echo "============================="
 
-arp -e 2>/dev/null > cached_ip_mac.txt
-route 2>/dev/null > cached_ip_mac.txt
-/sbin/route -nee 2>/dev/null > cached_ip_mac.txt
+# arp -e 2>/dev/null > cached_ip_mac.txt
+# route 2>/dev/null > cached_ip_mac.txt
+# /sbin/route -nee 2>/dev/null > cached_ip_mac.txt
 
 echo "============================="
 echo "          User information"
@@ -297,10 +297,13 @@ ls -alh /var/log/samba/ 2>/dev/null > logs.txt
 echo "============================="
 echo "          Linux perm"
 echo "============================="
-
+echo "------ ticky bit -----------"
 find / -perm -1000 -type d 2>/dev/null   # Sticky bit - Only the owner of the directory or the owner of a file can delete or rename here.
+echo "------ run as group ------------"
 find / -perm -g=s -type f 2>/dev/null    # SGID (chmod 2000) - run as the group, not the user who started it.
+echo "------ run as owner -----------"
 find / -perm -u=s -type f 2>/dev/null    # SUID (chmod 4000) - run as the owner, not the user who started it.
+echo "------ sgid - suid -----------"
 find / -perm -g=s -o -perm -u=s -type f 2>/dev/null    # SGID or SUID
 for i in `locate -r "bin$"`; do find $i \( -perm -4000 -o -perm -2000 \) -type f 2>/dev/null; done    # Looks in 'common' places: /bin, /sbin, /usr/bin, /usr/sbin, /usr/local/bin, /usr/local/sbin and any other *bin, for SGID or SUID (Quicker search)
 
@@ -324,7 +327,7 @@ echo "          Problem files"
 echo "============================="
 
 find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print   # world-writeable files
-find /dir -xdev \( -nouser -o -nogroup \) -print
+# find /dir -xdev \( -nouser -o -nogroup \) -print
 
 echo "============================="
 echo "          Pre-exploit tools"
