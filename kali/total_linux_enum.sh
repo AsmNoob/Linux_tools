@@ -326,21 +326,21 @@ echo "============================="
 echo "          Problem files"
 echo "============================="
 
-find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print   # world-writeable files
+find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print 2>/dev/null  # world-writeable files
 # find /dir -xdev \( -nouser -o -nogroup \) -print
 
 echo "============================="
 echo "          Pre-exploit tools"
 echo "============================="
 
-find / -name perl* > tools.txt
-find / -name python* > tools.txt
-find / -name gcc* > tools.txt
-find / -name cc > tools.txt
+find / -name perl* 2>/dev/null > tools.txt
+find / -name python* 2>/dev/null > tools.txt
+find / -name gcc* 2>/dev/null > tools.txt
+find / -name cc 2>/dev/null > tools.txt
 
 
-find / -name wget > tools.txt
-find / -name nc* > tools.txt
-find / -name netcat* > tools.txt
-find / -name tftp* > tools.txt
-find / -name ftp > tools.txt
+find / -name wget 2>/dev/null > tools.txt
+find / -name nc* 2>/dev/null > tools.txt
+find / -name netcat* 2>/dev/null > tools.txt
+find / -name tftp* 2>/dev/null > tools.txt
+find / -name ftp 2>/dev/null > tools.txt
