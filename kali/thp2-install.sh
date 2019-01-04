@@ -102,10 +102,11 @@ sudo python setup.py install
 cd /opt/
 rm libdasm-1.5.tar.gz
 
-su - postgres
-createuser -s gitrob
-createdb -O gitrob gitrob
-exit
+# TODO - needs to be fixed
+#su - postgres
+#createuser -s gitrob
+#createdb -O gitrob gitrob
+#exit
 
 cd /opt/
 rm thp2-install.sh
