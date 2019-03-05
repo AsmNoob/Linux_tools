@@ -20,6 +20,8 @@ ln -s /usr/local/bin/zsteg /opt/CTF_Tools/Stegano/zsteg
 mkdir /opt/CTF_Tools/Reverse
 apt-get install radare2
 ln -s /usr/bin/radare2 /opt/CTF_Tools/Reverse/radare2
+git clone https://github.com/0xd4d/dnSpy.git /opt/CTF_Tools/Reverse/dnspy
+
 
 mkdir /opt/CTF_Tools/Network
 apt-get install bro
@@ -41,6 +43,15 @@ pip install hachoir-parser
 pip install hachoir-core
 pip install hachoir_regex
 ln -s /usr/local/bin/hachoir-subfile /opt/CTF_Tools/Forensics/hachoir-subfile
+
+mkdir /opt/CTF_Tools/APK
+git clone https://github.com/skylot/jadx.git /opt/CTF_Tools/APK/jadx
+cd /opt/CTF_Tools/APK/jadx
+./gradlew dist
+
+mkdir /opt/CTF_Tools/Wi-fi
+apt-get install wifite
+ln -s /usr/sbin/wifite /opt/CTF_Tools/Wi-fi/wifite
 
 apt-get install wine
 
