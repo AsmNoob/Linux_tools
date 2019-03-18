@@ -18,22 +18,28 @@ gem install zsteg
 ln -s /usr/local/bin/zsteg /opt/CTF_Tools/Stegano/zsteg
 
 mkdir /opt/CTF_Tools/Reverse
-apt-get install radare2
+if [[ ! -e $(which radare2 2>/dev/null || echo FALSE) ]]; then apt-get install radare2; else echo "Radare already installed"; fi;
 ln -s /usr/bin/radare2 /opt/CTF_Tools/Reverse/radare2
 git clone https://github.com/0xd4d/dnSpy.git /opt/CTF_Tools/Reverse/dnspy
 
 
 mkdir /opt/CTF_Tools/Network
-apt-get install bro
+if [[ ! -e $(which bro 2>/dev/null || echo FALSE) ]]; then apt-get install bro; else echo "Bro already installed"; fi;
 ln -s /usr/bin/bro /opt/CTF_Tools/Network/bro
 
 mkdir /opt/CTF_Tools/PDF
-apt-get install pdfdetach pdfcrack
+if [[ ! -e $(which pdfdetach 2>/dev/null || echo FALSE) ]]; then apt-get install pdfdetach; else echo "PDFDetach already installed"; fi;
+if [[ ! -e $(which pdfcrack 2>/dev/null || echo FALSE) ]]; then apt-get install pdfcrack; else echo "PDFCrack already installed"; fi;
 ln -s /usr/bin/pdfdetach /opt/CTF_Tools/PDF/pdfdetach
 ln -s /usr/bin/pdfcrack /opt/CTF_Tools/PDF/pdfcrack
 
 mkdir /opt/CTF_Tools/Forensics
 apt-get install scalpel foremost vinetto binwalk
+if [[ ! -e $(which scalpel 2>/dev/null || echo FALSE) ]]; then apt-get install scalpel; else echo "Scalpel already installed"; fi;
+if [[ ! -e $(which foremost 2>/dev/null || echo FALSE) ]]; then apt-get install foremost; else echo "Foremost already installed"; fi;
+if [[ ! -e $(which vinetto 2>/dev/null || echo FALSE) ]]; then apt-get install vinetto; else echo "Vinetto already installed"; fi;
+if [[ ! -e $(which binwalk 2>/dev/null || echo FALSE) ]]; then apt-get install binwalk; else echo "Binwalk already installed"; fi;
+
 ln -s /usr/bin/scalpel /opt/CTF_Tools/Forensics/scalpel
 ln -s /usr/bin/foremost /opt/CTF_Tools/Forensics/foremost
 ln -s /usr/bin/vinetto /opt/CTF_Tools/Forensics/vinetto
@@ -53,11 +59,11 @@ mkdir /opt/CTF_Tools/Wi-fi
 apt-get install wifite
 ln -s /usr/sbin/wifite /opt/CTF_Tools/Wi-fi/wifite
 
-apt-get install wine
-
-git clone https://github.com/eugenekolo/sec-tools.git /opt/CTF_Tools/
-cd /opt/CTF_Tools
-./sec-tools/sec-tools setup && source ~/.bashrc
+if [[ ! -e $(which wine 2>/dev/null || echo FALSE) ]]; then apt-get install wine; else echo "Wine already installed"; fi;
+	
+git clone https://github.com/eugenekolo/sec-tools.git /opt/CTF_Tools/sec-tools
+cd /opt/CTF_Tools/sec-tools
+./sec-tools setup && source ~/.bashrc
 sec-tools install binary/apktool
 sec-tools install binary/binwalk
 sec-tools install binary/checksec
