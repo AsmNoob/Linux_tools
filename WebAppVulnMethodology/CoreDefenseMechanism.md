@@ -35,3 +35,13 @@ Weaknesses
 - how are tokens handled (can they be stolen?)
 
 ### Access Control
+
+How to limit access:
+- Roles and privileges
+
+Exploitation:
+- flawed idea that users will behave a certain way
+- laborious checks for each functionality need to be performed (can be automated)
+
+## Handling user input
+
