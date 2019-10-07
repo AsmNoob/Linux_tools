@@ -72,3 +72,9 @@ blacklists on characters can usually be bypassed with non-std chars
 #### Accept known good
 
 this is whitelisting
+
+This is the most effective method when possible. But even this can be suggest to exploit since some input can't avoid certain characters.
+
+#### Sanitization
+
+
