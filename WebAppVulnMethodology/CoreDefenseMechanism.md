@@ -45,3 +45,30 @@ Exploitation:
 
 ## Handling user input
 
+All user input is untrusted
+Anywhere on the applications
+Bypass input validation
+
+### Varieties of inputs
+
+Some inputs can perform strict checks but by design some can't (posts, comments, etc)
+This input then has to be stored in a db
+This input might be written to a disk
+This input might be displayedto other users
+
+There is also data send from the server for the application which can be tampered with 
+
+### Approaches to input handling
+
+#### Reject known bad 
+
+This means black listing.
+
+This usually can be easily bypassed with trivial adjustments
+blacklists on characters can usually be bypassed with non-std chars
+
+- very often vuln to null byte attacks. They stop filters processing them but not stopping them from being executed.
+
+#### Accept known good
+
+this is whitelisting
