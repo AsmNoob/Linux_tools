@@ -170,3 +170,11 @@ Page 45 for headers
 ## Web Functionality
 
 ### Server-Side functionality
+
+p 53-55 for specific applications for each languange
+
+- Java
+- ASP.NET
+- PHP
+- Ruby on Rails
+- SQL
