@@ -178,3 +178,105 @@ p 53-55 for specific applications for each languange
 - PHP
 - Ruby on Rails
 - SQL
+- XML
+- Web services -> SOAP
+
+### Client-side functionality
+
+- HTML
+- Hyperlinks
+- Forms
+- CSS
+- Javascript
+- VBScript
+- Ajax
+- JSON
+
+### State and Sessions
+
+## Encoding Schemes
+
+### URL encoding
+
+Way to transport characters over http
+always encode space % ? & = ; + #
+
+### Unicode encoding
+
+encodes characters: %u\*\*\*\* hexa characters
+
+### HTML encoding
+
+encodes problematic characters
+
+&quot;
+&apos;
+...
+
+encodes any character
+
+&#\*\*; ascii code
+
+&#x\*\*; hex form
+
+### Base64 encoding
+
+Used to send any binary data only printable ascii characters. (used for email attachements or credentials)
+
+### Hex encoding
+
+Direct binary data encoded with hex.
+
+### Remoting and Serialization frameworks
+- Flex/AMF
+- Silverlight and WCF
+- Java serialized objects
+
+# Mapping the application
+
+## Enumerating
+Starting points and simply
+- manual browsing
+- sitemap
+- robots.txt
+
+### Web Spidering
+Burpsuite, WebScarab, Zed Attack Proxy, CAT
+
+limitatioms:
+- unusual navigation mechanisms
+- buried links in flash or Java
+- form limitations
+- Because spiders stop when looping, problem if same paged is used to fetch content
+- random parameters in the URL which result in infinite loop
+- ability to handle authentication, can break
+	- request for logout inadvertly
+	- invalid input terminating session
+	- per page tokens
+
+CAREFUL: spiders can provoke a lot of damage
+- if they discover and use sensitive funct (delete, shutdown, ...)
+
+### User-directed Spidering
+
+More sophisticated but provides more control: manual traffic tracked by proxy -> creating a map.
+
+Advantages: 
+- uses app functions naturally
+- data validation is user controlled
+- user can login again if anything ends in session termination
+- any dangerous functionality will be parsed but can be chosen to be followed by the user.
+
+Other tools:
+HTTP and HTML analysis -> IEWatch (improves crawler capabilities)
+
+### Hacking process
+
+1. Setup browser proxy
+2. Browse the application
+3. Review map and manually check pages discovered by spider
+4. Use automated spider with everything already found but identify what is dangerous and exclude it.
+
+### Discovering Hidden Content
+
+
