@@ -270,7 +270,7 @@ Advantages:
 Other tools:
 HTTP and HTML analysis -> IEWatch (improves crawler capabilities)
 
-### Hacking process
+#### Hacking process
 
 1. Setup browser proxy
 2. Browse the application
@@ -278,5 +278,117 @@ HTTP and HTML analysis -> IEWatch (improves crawler capabilities)
 4. Use automated spider with everything already found but identify what is dangerous and exclude it.
 
 ### Discovering Hidden Content
+List of possible hidden content:
+- backup copies of live files (extension usually changed)
+- backup archives
+- new functionality in production not yet linked to the main app
+- default app functionality hidden
+- old version of files
+- configuration and include files
+- source files
+- comments
+- log files
+
+### Bruteforce techniques
+
+After the spidering, we can use the found map to bruteforce additional content
+spider found : x.com/eis/auth/ -> bruteforce /x.com/eis/auth/XX with Intruder.
+
+This will return response codes and length -> info to see if it is worth investigating.
+
+#### Hacking Process
+1. Make some manual request
+2. Use the sitemap generated as a basis for hidden content
+3. Bruteforce common files
+4. Capture the responses from the server
+5. Start again as new content gets discovered.
+
+### Inference from published content
+
+Finding patterns in the naming schemes to discover more hidden content
+Examples: 
+- eis/pub/media/110 -> we can try numbers
+- eis/auth/ForgotPassword -> we can try to change function name &&Password in Intruder
+
+#### Hacking Process
+1. review user directed spider + basic bruteforce exercice
+2. Look for naming schemes
+3. Look for names/numbers/dates
+4. Review all client-side code for hidden content (comments, forms, java applets and ActiveX cf chap15)
+5. Add to the enum list any of the extensions of the files found (txt, bak, src, inc, old, java, cs, ...)
+6. Look for temporary files (.DS\_Store, file.php~1 -> php file edited, .tmp)
+7. Further automated exercices with directories, files, ...
+8. Bruteforce on naming schemes by creating lists to bruteforce those schemes.
+9. And now perform everything recursively 
+
+Can be almost all be automated using Burp suite pro
+
+Dirbuster is also really nice for content discovery.
+
+### Use Public information
+
+Search Engines and Web archives are amazing.
+
+#### Hacking process
+1. Use Search engines and archives to obtain data
+2. Advanced search techniques 
+- site:url -> Everything indexed is returned
+- site:url term -> Adding terms refines results
+- link:url -> all other pages with links to that page 
+- related:url -> returns similar pages, a lot of irrelevat stuff but sometimes pages talk about it
+3. searches in all the sections of goole (images, news, etc)
+4. Go to the last page of search and run "Repeat search with omitted results"
+5. View the cached version of interesting pages, including non present content
+6. Perform the same queries on other domains from the same org. The goal is to identify old content that might still be accessible.
+
+Another source:
+1. Compile all names and emails
+2. Use the same search techniques as above and try to find activity on forums from them.
+
+### Leverage the Web Server
+
+Take advantage of default content shipping with applications.
+Use Wikto to find this information -> be careful of false negatives.
+This is why Buro is usually a better tool for this.
+
+#### Hacking step
+When using Nikto
+1. non-standard location -> --root /folder (or --Cgidirs for cgi-bin)
+2. if custom file 404 which isn't 404 error code this can be identified with --404
+3. No intelligent verification
+
+### Application Pages Versus Functional Paths
+
+Modern app structures don't follow all the same tree structure as what we are used.
+Instead they use Rest like URL or single pages that serve all the content based on the parameters given.
+
+#### Hacking process
+1. Identify any app where you request content through parameters
+2. Modify the automated techniques to work against the parameters
+3. Try to map application content based on functional paths
+
+### Discovering Hidden Paths
+
+The app might behave differently if you find parameters such as debug=true (bypass access control etc)
+
+1. Use a common list of debug parameters: debug, test, hide, source, etc with common values: true, false, 1, 0, yes, on,...
+Make large requests to the app testing all combinations. 
+Burp intruder + multiple payloads AND cluster bomb attack.
+2. Monitor all responses for any anomaly
+3. Target specific pages prone to debug work (login, search, uploads, downloads)
+
+## Analyzing the application
+
+Mapping is only one part
+Also important is understanding Behavior, Functionality, Technologies ==> surface of attack.
+
+Key areas to investigate:
+- core functionality of the app
+- peripheral app behavior (off-site links, error msg, admin and logging, redirects, ...)
+- core security mechanisms (session state, access control, authentication and logic(registration, pass change and recovery).
+- locations with user supplied processing
+- client-side technologies (forms, java applets, javascript, cookies, ...)
+- server side technologies (static vs dynamic pages, request types, SSL use, web server, db interaction, e-mail system, other back-end components)
+
 
 
