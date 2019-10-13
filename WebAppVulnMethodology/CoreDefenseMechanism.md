@@ -390,5 +390,105 @@ Key areas to investigate:
 - client-side technologies (forms, java applets, javascript, cookies, ...)
 - server side technologies (static vs dynamic pages, request types, SSL use, web server, db interaction, e-mail system, other back-end components)
 
+### Identifying entry points for user inputs
 
+Obvious locations for user input:
+- query string from the URL
+- every parameter in the query string
+- every parameter of a body request
+- every cookie
+- every HEADER processed
+
+#### URL file paths
+
+Most often everything before the query paramters string is considered as folders which isn't true. Make sure to sport the REST-like URLs.
+
+#### Request parameters
+
+Some apps have their own format for parameters:
+folder/file;a=hello&b=world
+folder/file?a=hello$b=world
+folder/file/a%3dhello%26b%£dworld
+folder/a.hello/file
+folder/a=hello/file
+folder/file?param=a:hello
+folder/file?data=%3ca%3hello
+
+Of course this has to be taken in account when probing the app.
+
+#### Http Headers
+
+Use the user-agent to change possible the app content (intruder can provide a lot of payloads for that).
+Use the Referrer to make the app provide additional content
+Using additional headers can also allow for more attacks 
+	Using the X-Forwarded-For header and crafting a specific header you can end up with sql injections or persistent XSS
+
+#### Out-of-band channels
+
+Data inputs that are usually undetectable.
+examples:
+- web-app that processes emails 
+- publishing app that has a function to retrieve content from another server
+- IDS gathering data from network presenting it
+- any app that presents an API interface for non-browser user-agents.
+
+## Identifying Server Side technologies
+
+Use browser extensions 
+
+## Identifying Server-side Functionality
+
+### Dissecting requests
+
+search fct -> db
+parameters -> type of db queries
+	   -> localisation
+	   -> file
+
+Also nice to analyse every part of even simple functionalities such as feedback emails to obtain information around the app.
+
+Everytime there is an action in a parameter or a REST like URL, try to look for the most obvious next functions that could exists and that could be exploited.
+
+### Extrapolating Application Behavior
+
+SOmetimes the place where the vulnerability lies can't be used as testing (SQLi without knowing the sanitization because no response from server) but instead
+other parts of the server which provide feedback on input can be used to test the sanitization of the payload.
+Same applies for other type of schemes like obfuscation of data which errors in the app might reveal somewhere else and where the obfuscation can be reversed.
+
+Error handling is often inconsistent throughout applications therefore, make sure to try and trigger them everywhere.
+
+### Isolating Unique Application Behaviour
+
+All the above will only work most of the time with custom applications. Frameworks are usually tested and protected against most common vulnerabilities.
+Therefore in this type of applications we will look for the added content which doesn't belong under the umbrella of the secureity of the framework.
+
+#### Hacking Process
+1. Take note of any divergence from the standard UI
+2. Retrospectively added functionality (debug, captcha controls, usage tracking, third-party control)
+3. full review these areas and do not assume the same security preventions applied elsewhere in the app.
+
+## Mapping the Attack Surface 
+
+All these are the key types of behaviors which are affected by the following vulnerabilities:
+- Client side validation - Checks not replicated on server
+- Database interaction - SQLi
+- File Up/Download - Path traversal, Stored XSS, RCE
+- Display of user supplied data - XSS
+- Dynamic redirects - CSRF, header injection
+- Social NEtwork Features - user enumeration, stored XSS
+- Login - user enumeration, weak pass, bruteforce
+- Multi-stage login - Logic flaws
+- Session state - predictable tokens, insecure handling of tokens
+- Access control - horizontal/vertical privilege escalation
+- User impersonation fct - privilege escalation
+- Use of cleartext communications - session hijacking, capture of credentials and data
+- Off-site links - Leak of parameters in the referrer header
+- Interface to external systems - Shortcut to session and access control handling
+- Error messages - Information Leakage
+- E-mail interaction - Email/Command injection
+- Native code interaction - Command injection
+- Thirdparty app components - Known vulnerabilities
+- Known web server - config weaknesses, software bugs
+
+# Bypassing client-side controls
 
